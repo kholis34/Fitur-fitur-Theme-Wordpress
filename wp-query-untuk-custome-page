@@ -1,0 +1,58 @@
+<?php 
+/*
+* Template Name: Blog Full Masonry
+*/
+ ?>
+<?php get_header(); ?>
+<div class="large-12 columns indexnet">
+ <div class="row masonry">
+<ul id="container" class="row small-up-2 medium-up-4 large-up-3">      
+        <?php
+        $my_query = new WP_Query( 'order=ASC'); // I used a category id 1 as an example
+        ?>
+        <?php if ( $my_query->have_posts() ) : ?>
+        
+        <?php while ($my_query->have_posts()) : $my_query->the_post(); ?>
+  <li class="column column-block">
+    <div class="content-masonry">
+      <div class="main-thumbmasonry">
+        <a href="<?php the_permalink(); ?>"><?php   
+                  if ( has_post_thumbnail() ) {  
+                    the_post_thumbnail();  
+                    } 
+                    else {
+  echo '<img src="' . get_bloginfo( 'stylesheet_directory' ) . '/images/home.jpg" alt="<?php the_title(); ?>"/>';
+            }
+                ?></a>
+      </div><!--end main-thumb-->
+      <h2 class="indexnet masonry"><a href="<?php the_permalink(); ?>" title="<?php the_title(); ?>"/><?php echo ShortenText(get_the_title()); ?></a></h2>
+      <p><?php echo get_the_catcharacter_excerpt(); ?> [...]Masonry</p>
+    </div>
+  </li>
+<?php endwhile; else: ?>
+           <div class="search">
+        <h2 class="center">Not Found</h2>
+        <p class="center">Sorry, but you are looking for something that isn't here.</p>
+      </div>
+<?php
+        wp_reset_postdata(); //resetting the post query
+        endif;
+        ?>
+
+
+</ul>
+ </div>
+
+</div><!--end 12 pages-->
+<div class="large-12 columns navi">
+  <div class="row">
+    <div class="navi float-right">
+        <?php
+      include('wp-pagenavi.php');
+      if(function_exists('wp_pagenavi')) { wp_pagenavi(); }
+    ?>
+      </div><!--end navigations-->
+ </div>
+  </div>
+<?php get_sidebar('footer'); ?>
+<?php get_footer(); ?>
