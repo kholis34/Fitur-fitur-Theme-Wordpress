@@ -1,0 +1,59 @@
+<div class="relatedposts">
+<h4>You may also like</h4>
+<?php
+  $orig_post = $post;
+  global $post;
+  $tags = wp_get_post_tags($post->ID);
+   
+  if ($tags) {
+  $tag_ids = array();
+  foreach($tags as $individual_tag) $tag_ids[] = $individual_tag->term_id;
+  $args=array(
+  'tag__in' => $tag_ids,
+  'post__not_in' => array($post->ID),
+  'posts_per_page'=>4, // Number of related posts to display.
+  'caller_get_posts'=>1
+  );
+   
+  $my_query = new wp_query( $args );
+ 
+  while( $my_query->have_posts() ) {
+  $my_query->the_post();
+  ?>
+   
+  <div class="row main-artiles">
+        <div class="large-12 columns main-artiles">
+             
+           <div class="row main-artikel2">
+                <div class="large-6 columns main-thubms">
+                <a href="<?php the_permalink(); ?>"><?php   
+                  if ( has_post_thumbnail() ) {  
+                    the_post_thumbnail();  
+                    } 
+                    else {
+  echo '<img src="' . get_bloginfo( 'stylesheet_directory' ) . '/images/home.jpg" alt="<?php the_title(); ?>"/>';
+            }
+                ?></a>
+            </div><!--end 7 main-thubms -->
+            <div class="large-6 columns main-descs">
+                <h6><?php the_category(',');?></h6>
+                <h2 > <a href="<?php the_permalink();?>" title="<?php the_title();?>"><?php the_title();?></a></h2>
+                <div class="meta-content">
+                    <span><?php the_date(); ?> | Add comment</span>
+                </div>
+                <p><?php echo get_the_catcharacter_excerpt(); ?>...</p>
+
+            </div><!--end 6 main-descs -->
+           </div>
+           
+
+        </div>
+
+    </div>
+   
+  <? }
+  }
+  $post = $orig_post;
+  wp_reset_query();
+  ?>
+</div>
