@@ -1,3 +1,36 @@
+Functions.php
+
+// DIY Popular Posts @ https://digwp.com/2016/03/diy-popular-posts/
+function shapeSpace_popular_posts($post_id) {
+    $count_key = 'popular_posts';
+    $count = get_post_meta($post_id, $count_key, true);
+    if ($count == '') {
+        $count = 0;
+        delete_post_meta($post_id, $count_key);
+        add_post_meta($post_id, $count_key, '0');
+    } else {
+        $count++;
+        update_post_meta($post_id, $count_key, $count);
+    }
+}
+function shapeSpace_track_posts($post_id) {
+    if (!is_single()) return;
+    if (empty($post_id)) {
+        global $post;
+        $post_id = $post->ID;
+    }
+    shapeSpace_popular_posts($post_id);
+}
+add_action('wp_head', 'shapeSpace_track_posts');
+//
+function time_ago( $type = 'post' ) {
+    $d = 'comment' == $type ? 'get_comment_time' : 'get_post_time';
+ 
+    return human_time_diff($d('U'), current_time('timestamp')) . " " . __('ago');
+ 
+}
+
+Index.php
 <h3 class="sidebar">POPULAR</h3>
         <ul>
           <?php $popular = new WP_Query(array('posts_per_page'=>7, 'meta_key'=>'popular_posts', 'orderby'=>'meta_value_num', 'order'=>'DESC'));
