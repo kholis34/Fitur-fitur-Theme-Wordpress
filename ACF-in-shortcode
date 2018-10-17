@@ -1,0 +1,16 @@
+function targeting($atts) {
+    
+    $targeting_likes = get_field('targeting_likes');
+    $targeting_comments = get_field('targeting_comments');
+    $targeting_share = get_field('targeting_share');
+    $targeting_reactions = get_field('targeting_reactions');
+
+     return ' 
+    <ul class="list-inline target">
+						<li><span class="targeting">' .$targeting_likes. '</span></br> <span class="target">LIKES</span></li>
+						<li><span class="targeting">' .$targeting_comments. '</span></br> <span class="target">COMMENTS</span></li>
+						<li><span class="targeting">' .$targeting_share. '</span></br> <span class="target">SHARES</span></li>
+						<li><span class="targeting">' .$targeting_reactions. '</span></br> <span class="target">REACTIONS</span></li>
+					</ul>';
+}
+add_shortcode('targeting-shortcode', 'targeting');
