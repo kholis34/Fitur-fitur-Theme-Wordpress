@@ -1,0 +1,1 @@
+<?php	echo do_shortcode('[pms-restrict subscription_plans="1473"]'.do_shortcode(get_post_field('post_content', $postid)).'[/pms-restrict]');?>
