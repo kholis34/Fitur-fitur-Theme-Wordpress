@@ -1,0 +1,1 @@
+<?php	echo do_shortcode('[pms-restrict subscription_plans="1473"]'.do_shortcode('[targeting-shortcode]').'[/pms-restrict]');?>
