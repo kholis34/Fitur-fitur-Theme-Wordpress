@@ -1,0 +1,5 @@
+<?php if ( get_field( 'premium_content' ) ): ?>
+<?php echo do_shortcode('[pms-restrict subscription_plans="1472"]'.do_shortcode('[price_info-shortcode]').'[/pms-restrict]'); ?>
+<?php else: ?>
+<p>Ini hide</p>
+<?php endif; ?>
